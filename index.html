@@ -26,6 +26,7 @@
   html { scroll-behavior: smooth; }
 
   body {
+    position: relative;
     background: var(--bg);
     color: var(--ink);
     font-family: var(--sans);
@@ -63,17 +64,84 @@
   .nav-links a:hover { color: var(--ink); }
 
   /* MAIN WRAPPER */
-  main { max-width: 900px; margin: 0 auto; padding: 0 32px; }
+  main { max-width: 900px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+  .bg-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 1200px;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+  }
+  .bg-shape {
+    position: absolute;
+    border-radius: 28px;
+    background: rgba(112, 72, 38, 0.16);
+    box-shadow: 0 24px 60px rgba(112, 72, 38, 0.06);
+    opacity: 0;
+    transform: translateY(24px) scale(0.92);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+    will-change: opacity, transform;
+  }
+  .bg-shape.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .bg-shape.shape-1 { width: 148px; height: 148px; top: 90px; left: 5%; }
+  .bg-shape.shape-2 { width: 96px; height: 96px; top: 220px; left: 22%; }
+  .bg-shape.shape-3 { width: 120px; height: 80px; top: 180px; right: 10%; }
+  .bg-shape.shape-7 { width: 74px; height: 130px; top: 120px; right: 28%; }
+  .bg-shape.shape-8 { width: 130px; height: 62px; top: 340px; left: 68%; }
+  .bg-shape.shape-4 { width: 110px; height: 110px; top: 520px; left: 10%; }
+  .bg-shape.shape-5 { width: 140px; height: 74px; top: 620px; right: 16%; }
+  .bg-shape.shape-6 { width: 84px; height: 84px; top: 700px; left: 50%; }
+  .bg-shape.shape-15 { width: 96px; height: 96px; top: 580px; left: 28%; }
+  .bg-shape.shape-16 { width: 120px; height: 60px; top: 660px; right: 32%; }
+  .bg-shape.shape-9 { width: 90px; height: 120px; top: 880px; left: 14%; }
+  .bg-shape.shape-10 { width: 130px; height: 88px; top: 940px; right: 22%; }
+  .bg-shape.shape-11 { width: 148px; height: 64px; top: 1040px; left: 48%; }
+  .bg-shape.shape-12 { width: 100px; height: 100px; top: 1120px; right: 8%; }
 
   /* HERO */
   .hero {
-    padding-top: 140px;
-    padding-bottom: 100px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 140px 32px 100px;
     border-bottom: 1px solid var(--rule);
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 40px;
-    align-items: end;
+    align-items: start;
+  }
+  .hero > div {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .hero-content {
+    max-width: none;
+    margin: 0;
+  }
+  .hero-image {
+    display: flex;
+    align-items: center;
+  }
+  .image-placeholder {
+    width: 250px;
+    height: 250px;
+    background: #704826;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 12px;
+    text-align: center;
+    gap: 10px;
   }
   .hero-eyebrow {
     font-family: var(--mono);
@@ -128,7 +196,10 @@
   .btn-ghost:hover { background: var(--hover); }
 
   .hero-meta {
-    text-align: right;
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    margin: 24px 0;
     font-family: var(--mono);
     font-size: 11.5px;
     color: var(--ink-3);
@@ -136,6 +207,8 @@
     letter-spacing: 0.03em;
   }
   .hero-meta strong { color: var(--ink-2); font-weight: 500; }
+
+  
 
   /* SECTION */
   section { padding: 80px 0; border-bottom: 1px solid var(--rule); }
@@ -343,8 +416,9 @@
   @media (max-width: 680px) {
     nav { padding: 0 20px; }
     main { padding: 0 20px; }
-    .hero { grid-template-columns: 1fr; padding-top: 100px; padding-bottom: 60px; }
-    .hero-meta { text-align: left; }
+    .hero { padding: 100px 20px 60px; grid-template-columns: 1fr; gap: 24px; }
+    .hero-image { justify-content: center; }
+    .image-placeholder { width: 200px; height: 200px; }
     .exp-item { grid-template-columns: 1fr; gap: 8px; }
     .projects-grid { grid-template-columns: 1fr; }
     .skills-grid { grid-template-columns: 1fr 1fr; }
@@ -353,6 +427,22 @@
 </style>
 </head>
 <body>
+  <div class="bg-shapes">
+    <span class="bg-shape shape-1" data-shape-section="top"></span>
+    <span class="bg-shape shape-2" data-shape-section="top"></span>
+    <span class="bg-shape shape-3" data-shape-section="top"></span>
+    <span class="bg-shape shape-7" data-shape-section="top"></span>
+    <span class="bg-shape shape-8" data-shape-section="top"></span>
+    <span class="bg-shape shape-4" data-shape-section="middle"></span>
+    <span class="bg-shape shape-5" data-shape-section="middle"></span>
+    <span class="bg-shape shape-6" data-shape-section="middle"></span>
+    <span class="bg-shape shape-15" data-shape-section="middle"></span>
+    <span class="bg-shape shape-16" data-shape-section="middle"></span>
+    <span class="bg-shape shape-9" data-shape-section="bottom"></span>
+    <span class="bg-shape shape-10" data-shape-section="bottom"></span>
+    <span class="bg-shape shape-11" data-shape-section="bottom"></span>
+    <span class="bg-shape shape-12" data-shape-section="bottom"></span>
+  </div>
 
 <nav>
   <a class="nav-name" href="#">PBJ / 2026</a>
@@ -367,25 +457,34 @@
 <main>
 
   <!-- HERO -->
-  <div class="hero">
-    <div>
+  <div class="hero" data-section-trigger="top">
+    <div class="hero-content">
       <p class="hero-eyebrow">Software Engineer · Full-Stack · Bengaluru</p>
       <h1>Pranav <em>BJ</em></h1>
       <p class="hero-desc">
         I build scalable backends, clean frontend interfaces, and data pipelines that actually work in production. Currently pursuing CSE + Data Science at Acharya Institute of Technology.
       </p>
+      <div class="hero-meta">
+        <div><strong>GPA</strong><br/>8.37 / 10</div>
+        <br/>
+        <div><strong>Graduating</strong><br/>Jun 2026</div>
+        <br/>
+        <div><strong>Open to</strong><br/>Internships</div>
+      </div>
       <div class="hero-cta">
         <a class="btn btn-primary" href="mailto:pranavbj80@gmail.com">Get in touch ↗</a>
         <a class="btn btn-ghost" href="https://github.com/PranavBj2406" target="_blank">GitHub</a>
         <a class="btn btn-ghost" href="https://linkedin.com/in/pranav-bj" target="_blank">LinkedIn</a>
+        <a class="btn btn-ghost" href="PranavBJ_SDE_resume.pdf" download>Resume</a>
       </div>
     </div>
-    <div class="hero-meta">
-      <div><strong>GPA</strong><br/>8.37 / 10</div>
-      <br/>
-      <div><strong>Graduating</strong><br/>Jun 2026</div>
-      <br/>
-      <div><strong>Open to</strong><br/>Internships</div>
+    <div class="hero-image">
+      <div class="image-placeholder">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5">
+          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        <span>Your Photo</span>
+      </div>
     </div>
   </div>
 
@@ -409,19 +508,21 @@
   </section>
 
   <!-- PROJECTS -->
-  <section id="projects">
+  <section id="projects" data-section-trigger="middle">
     <div class="section-label">Selected Projects</div>
     <div class="projects-grid fade-up">
 
       <div class="project-card">
         <div class="project-num">01</div>
-        <div class="project-name">REST-Driven ETL Data Pipeline</div>
-        <p class="project-desc">Automated pipeline processing 5,000 records daily (~150K/month), extracting, transforming, and loading structured data into MySQL with 99.5% accuracy. Fault-tolerant Airflow DAGs with Docker containerization.</p>
+        <div class="project-name">AI-Powered-Stock-ETL-Pipeline-with-Intelligent-Data-Quality-Monitoring</div>
+        <p class="project-desc">Built a Dockerized Airflow ETL pipeline extracting livestock data from RapidAPI into MySQL at ~5,000 records/day with validation, deduplication, retry logic, and 99.5% data integrity.</p>
         <div class="tags">
           <span class="tag">Python</span>
           <span class="tag">Airflow</span>
           <span class="tag">MySQL</span>
           <span class="tag">Docker</span>
+          <span class="tag">LangChain</span>
+          <span class="tag">Llama 3.1</span>
         </div>
       </div>
 
@@ -524,7 +625,7 @@
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" style="border-bottom: none;">
+  <section id="contact" style="border-bottom: none;" data-section-trigger="bottom">
     <div class="section-label">Contact</div>
     <div class="contact-row fade-up">
       <div>
@@ -557,7 +658,7 @@
 </main>
 
 <footer>
-  © 2026 Pranav BJ &nbsp;·&nbsp; Designed for Sancity AI application
+  © 2026 Pranav BJ &nbsp;·&nbsp; Code Rookie & Designer &nbsp;·&nbsp; Made with ❤️ and Claude
 </footer>
 
 <script>
@@ -565,6 +666,33 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  const updateShapes = () => {
+    const scrollTop = window.pageYOffset;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = scrollTop / docHeight;
+
+    const topShapes = document.querySelectorAll('.bg-shape[data-shape-section="top"]');
+    const middleShapes = document.querySelectorAll('.bg-shape[data-shape-section="middle"]');
+    const bottomShapes = document.querySelectorAll('.bg-shape[data-shape-section="bottom"]');
+
+    if (scrollPercent < 0.33) {
+      topShapes.forEach(shape => shape.classList.add('visible'));
+      middleShapes.forEach(shape => shape.classList.remove('visible'));
+      bottomShapes.forEach(shape => shape.classList.remove('visible'));
+    } else if (scrollPercent < 0.66) {
+      topShapes.forEach(shape => shape.classList.remove('visible'));
+      middleShapes.forEach(shape => shape.classList.add('visible'));
+      bottomShapes.forEach(shape => shape.classList.remove('visible'));
+    } else {
+      topShapes.forEach(shape => shape.classList.remove('visible'));
+      middleShapes.forEach(shape => shape.classList.remove('visible'));
+      bottomShapes.forEach(shape => shape.classList.add('visible'));
+    }
+  };
+
+  window.addEventListener('scroll', updateShapes);
+  updateShapes(); // Initial call
 </script>
 
 </body>
