@@ -127,15 +127,22 @@
   .hero-image {
     display: flex;
     align-items: center;
-    background: #2a1e15;
-    padding: 10px;
-    border-radius: 12px;
+    animation: fadeIn 1s ease-in-out;
   }
-  .hero-image img {
+  .image-placeholder {
     width: 270px;
-    height: 270px;
-    object-fit: cover;
+    height: 280px;
+    background: #3a2c1f;
     border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 12px;
+    text-align: center;
+    gap: 10px;
   }
   .hero-eyebrow {
     font-family: var(--mono);
@@ -407,12 +414,25 @@
   }
   .fade-up.visible { opacity: 1; transform: translateY(0); }
 
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .hero-image {
+    animation: fadeIn 1s ease-in-out;
+  }
+
   @media (max-width: 680px) {
     nav { padding: 0 20px; }
     main { padding: 0 20px; }
     .hero { padding: 100px 20px 60px; grid-template-columns: 1fr; gap: 24px; }
-    .hero-image { justify-content: center; padding: 5px; }
-    .hero-image img { width: 200px; height: 200px; }
+    .hero-image { justify-content: center; }
+    .image-placeholder { width: 200px; height: 220px; }
     .exp-item { grid-template-columns: 1fr; gap: 8px; }
     .projects-grid { grid-template-columns: 1fr; }
     .skills-grid { grid-template-columns: 1fr 1fr; }
@@ -473,8 +493,12 @@
       </div>
     </div>
     <div class="hero-image">
-      <img src="bg_image.png" alt="Pranav BJ" style="width: 250px; height: 250px; object-fit: cover; border-radius: 12px;">
-    </img>
+      <div class="image-placeholder">
+          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        <img src="bg_image.png" alt="Pranav BJ" style="width: 300px; height: 250px; object-fit: cover; border-radius: 12px; display: block;"/>
+      </div>
+    </div>
   </div>
 
   <!-- EXPERIENCE -->
@@ -647,7 +671,7 @@
 </main>
 
 <footer>
-  © 2026 Pranav BJ &nbsp;·&nbsp; Code Rookie & Designer &nbsp;·&nbsp; Made with ❤️ and Claude
+  © 2026 Pranav BJ &nbsp;·&nbsp; Code Rookie & Designer &nbsp;·&nbsp; Made with ❤️ and 🤖
 </footer>
 
 <script>
@@ -661,22 +685,14 @@
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const scrollPercent = scrollTop / docHeight;
 
-    const topShapes = document.querySelectorAll('.bg-shape[data-shape-section="top"]');
-    const middleShapes = document.querySelectorAll('.bg-shape[data-shape-section="middle"]');
-    const bottomShapes = document.querySelectorAll('.bg-shape[data-shape-section="bottom"]');
-
-    if (scrollPercent < 0.33) {
-      topShapes.forEach(shape => shape.classList.add('visible'));
-      middleShapes.forEach(shape => shape.classList.remove('visible'));
-      bottomShapes.forEach(shape => shape.classList.remove('visible'));
-    } else if (scrollPercent < 0.66) {
-      topShapes.forEach(shape => shape.classList.remove('visible'));
-      middleShapes.forEach(shape => shape.classList.add('visible'));
-      bottomShapes.forEach(shape => shape.classList.remove('visible'));
-    } else {
-      topShapes.forEach(shape => shape.classList.remove('visible'));
-      middleShapes.forEach(shape => shape.classList.remove('visible'));
-      bottomShapes.forEach(shape => shape.classList.add('visible'));
+    if (scrollPercent > 0.1) {
+      document.querySelectorAll('.bg-shape[data-shape-section="top"]').forEach(shape => shape.classList.add('visible'));
+    }
+    if (scrollPercent > 0.4) {
+      document.querySelectorAll('.bg-shape[data-shape-section="middle"]').forEach(shape => shape.classList.add('visible'));
+    }
+    if (scrollPercent > 0.7) {
+      document.querySelectorAll('.bg-shape[data-shape-section="bottom"]').forEach(shape => shape.classList.add('visible'));
     }
   };
 
