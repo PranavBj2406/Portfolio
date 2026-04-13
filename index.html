@@ -127,21 +127,15 @@
   .hero-image {
     display: flex;
     align-items: center;
-  }
-  .image-placeholder {
-    width: 250px;
-    height: 250px;
-    background: #704826;
+    background: #2a1e15;
+    padding: 10px;
     border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-family: var(--mono);
-    font-size: 12px;
-    text-align: center;
-    gap: 10px;
+  }
+  .hero-image img {
+    width: 270px;
+    height: 270px;
+    object-fit: cover;
+    border-radius: 12px;
   }
   .hero-eyebrow {
     font-family: var(--mono);
@@ -417,8 +411,8 @@
     nav { padding: 0 20px; }
     main { padding: 0 20px; }
     .hero { padding: 100px 20px 60px; grid-template-columns: 1fr; gap: 24px; }
-    .hero-image { justify-content: center; }
-    .image-placeholder { width: 200px; height: 200px; }
+    .hero-image { justify-content: center; padding: 5px; }
+    .hero-image img { width: 200px; height: 200px; }
     .exp-item { grid-template-columns: 1fr; gap: 8px; }
     .projects-grid { grid-template-columns: 1fr; }
     .skills-grid { grid-template-columns: 1fr 1fr; }
@@ -479,13 +473,8 @@
       </div>
     </div>
     <div class="hero-image">
-      <div class="image-placeholder">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5">
-          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-        </svg>
-        <span>Your Photo</span>
-      </div>
-    </div>
+      <img src="bg_image.png" alt="Pranav BJ" style="width: 250px; height: 250px; object-fit: cover; border-radius: 12px;">
+    </img>
   </div>
 
   <!-- EXPERIENCE -->
