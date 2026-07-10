@@ -73,7 +73,7 @@
   .nav-links a:hover { color: var(--ink); }
 
   /* MAIN WRAPPER */
-  main { max-width: 900px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+  main { max-width: 1000px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
 
   .bg-shapes {
     position: absolute;
@@ -238,87 +238,368 @@
     background: var(--rule);
   }
 
-  /* EXPERIENCE */
-  .exp-item {
-    display: grid;
-    grid-template-columns: 160px 1fr;
-    gap: 32px;
-    padding: 28px 0;
-    border-bottom: 1px solid var(--rule);
-  }
-  .exp-item:last-child { border-bottom: none; }
-  .exp-date {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--ink-3);
-    padding-top: 3px;
-    line-height: 1.5;
-  }
-  .exp-role {
-    font-family: var(--serif);
-    font-size: 20px;
-    font-weight: 400;
-    margin-bottom: 4px;
-  }
-  .exp-company {
-    font-size: 13px;
-    color: var(--ink-2);
-    margin-bottom: 14px;
-    font-weight: 500;
-  }
-  .exp-bullets { list-style: none; }
-  .exp-bullets li {
-    font-size: 14px;
-    color: var(--ink-2);
-    line-height: 1.65;
-    padding-left: 16px;
+  /* JOURNEY PATH — curved adventure style */
+  .journey-container {
     position: relative;
-    margin-bottom: 6px;
+    width: 100%;
+    height: 560px;
+    overflow: visible;
   }
-  .exp-bullets li::before {
-    content: '—';
-    position: absolute; left: 0;
+  .journey-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+  /* animated photon on path */
+  #jPhoton { transition: none; }
+
+  /* stop cards */
+  .journey-stop {
+    position: absolute;
+    transform: translateX(-50%);
+    width: 230px;
+  }
+  .stop-1 { left: 17.78%; top: 0px; }
+  .stop-2 { left: 77.78%; top: 313px; }
+
+  .stop-card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 16px 18px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    transition: box-shadow 0.25s, transform 0.25s;
+    position: relative;
+    z-index: 2;
+  }
+  .stop-card:hover {
+    box-shadow: 0 8px 30px rgba(122,82,48,0.14);
+    transform: translateY(-3px);
+  }
+  .stop-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: #fff;
+    padding: 3px 10px 3px 8px;
+    border-radius: 3px;
+    margin-bottom: 11px;
+  }
+  .stop-badge-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: rgba(184,137,90,0.9);
+    animation: badgePulse 1.8s ease-in-out infinite;
+  }
+  @keyframes badgePulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .stop-logo-slot {
+    width: 38px; height: 38px;
+    border: 1.5px dashed rgba(122,82,48,0.35);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    overflow: hidden;
+    background: var(--tag-bg);
+  }
+  .stop-logo-slot img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+  }
+  .stop-logo-slot .logo-placeholder {
+    font-family: var(--mono);
+    font-size: 8px;
     color: var(--ink-3);
+    letter-spacing: 0.06em;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .stop-role {
+    font-family: var(--serif);
+    font-size: 14.5px;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 3px;
+  }
+  .stop-company {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: rgba(122,82,48,0.8);
+    letter-spacing: 0.04em;
+    margin-bottom: 3px;
+  }
+  .stop-dates {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .stop-bullets { list-style: none; }
+  .stop-bullets li {
     font-size: 12px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    padding-left: 13px;
+    position: relative;
+    margin-bottom: 5px;
+  }
+  .stop-bullets li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    font-size: 9px;
+    color: rgba(122,82,48,0.55);
+    top: 2px;
   }
 
-  /* PROJECTS */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-    background: var(--rule);
+  /* connector line + marker dot */
+  .stop-connector {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    background: linear-gradient(to bottom, var(--rule), rgba(184,137,90,0.5));
+    z-index: 1;
+  }
+  .stop-1 .stop-connector { top: 148px; height: 34px; }
+  .stop-2 .stop-connector { top: -37px; height: 37px; }
+
+  .stop-marker {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: rgb(184,137,90);
+    border: 2.5px solid var(--surface);
+    box-shadow: 0 0 0 3px rgba(184,137,90,0.3), 0 0 14px rgba(184,137,90,0.55);
+    z-index: 3;
+    animation: markerPulse 2.5s ease-in-out infinite;
+  }
+  .stop-1 .stop-marker { top: 182px; }
+  .stop-2 .stop-marker { top: -50px; }
+  @keyframes markerPulse {
+    0%,100% { box-shadow: 0 0 0 3px rgba(184,137,90,0.3), 0 0 14px rgba(184,137,90,0.55); }
+    50%      { box-shadow: 0 0 0 7px rgba(184,137,90,0.1), 0 0 22px rgba(184,137,90,0.35); }
+  }
+
+  /* journey labels */
+  .journey-label {
+    position: absolute;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .journey-start { left: 0; bottom: 22px; }
+  .journey-end { right: 0; top: 44%; display: flex; align-items: center; gap: 8px; }
+  .now-pulse {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgb(184,137,90);
+    animation: nowPulse 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes nowPulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(184,137,90,0.5); }
+    50%      { box-shadow: 0 0 0 7px rgba(184,137,90,0); }
+  }
+
+  /* mobile: collapse to vertical */
+  @media (max-width: 680px) {
+    .journey-container { height: auto; padding-bottom: 20px; }
+    .journey-svg { display: none; }
+    .journey-label { display: none; }
+    .journey-stop { position: relative; left: auto; top: auto; transform: none;
+                    width: 100%; margin-bottom: 20px; }
+    .stop-connector { display: none; }
+    .stop-marker { position: static; transform: none; width: 10px; height: 10px;
+                   display: inline-block; margin-bottom: 10px; }
+    .stop-card { width: 100%; }
+  }
+
+  /* PROJECTS — full-width horizontal split cards */
+  .projects-list {
+    display: flex;
+    flex-direction: column;
     border: 1px solid var(--rule);
-    border-radius: 6px;
+    border-radius: 8px;
     overflow: hidden;
   }
-  .project-card {
+  .pj-card {
+    display: grid;
+    grid-template-columns: 42% 1fr;
     background: var(--surface);
-    padding: 32px 28px;
-    transition: background 0.2s;
-    cursor: default;
+    min-height: 270px;
+    position: relative;
   }
-  .project-card:hover { background: var(--hover); }
-  .project-num {
+  .pj-card:not(:last-of-type) { border-bottom: 1px solid var(--rule); }
+
+  /* image side */
+  .pj-img {
+    position: relative;
+    border-right: 1px solid var(--rule);
+    background: var(--tag-bg);
+    overflow: hidden;
+    min-height: 260px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pj-img img {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: 0 8px 24px rgba(17, 17, 17, 0.06);
+    transition: transform 0.5s ease;
+  }
+  .pj-card:hover .pj-img img { transform: scale(1.03); }
+
+  /* dashed skeleton placeholder */
+  .pj-skeleton {
+    position: absolute;
+    inset: 16px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 10px;
+    border-radius: 8px;
+  }
+  .pj-skeleton::before {
+    content: '';
+    position: absolute; inset: 14px;
+    border: 1.5px dashed rgba(122,82,48,0.28);
+    border-radius: 5px;
+  }
+  .pj-skeleton-icon {
+    font-size: 22px;
+    opacity: 0.22;
+    line-height: 1;
+  }
+  .pj-skeleton-label {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(122,82,48,0.35);
+    text-align: center;
+    line-height: 1.6;
+  }
+  .pj-img-num {
+    position: absolute;
+    top: 14px; left: 16px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(122,82,48,0.38);
+    z-index: 1;
+  }
+
+  /* info side */
+  .pj-info {
+    padding: 30px 28px;
+    display: flex;
+    flex-direction: column;
+  }
+  .pj-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .pj-num {
     font-family: var(--mono);
     font-size: 11px;
     color: var(--ink-3);
     letter-spacing: 0.1em;
-    margin-bottom: 16px;
   }
-  .project-name {
-    font-family: var(--serif);
-    font-size: 19px;
-    font-weight: 400;
-    line-height: 1.3;
-    margin-bottom: 12px;
-  }
-  .project-desc {
-    font-size: 13.5px;
+  .pj-links { display: flex; gap: 7px; }
+  .pj-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.03em;
     color: var(--ink-2);
-    line-height: 1.65;
-    margin-bottom: 20px;
+    text-decoration: none;
+    padding: 5px 12px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    transition: all 0.18s;
   }
+  .pj-link:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .pj-name {
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .pj-solve {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.7;
+    margin-bottom: 22px;
+    flex: 1;
+  }
+  .pj-solve strong { color: var(--ink); font-weight: 500; }
+
+  /* spotlight overlay */
+  .pj-spotlight {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle 260px at var(--mx,50%) var(--my,50%), rgba(122,82,48,0.055), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .pj-card:hover .pj-spotlight { opacity: 1; }
+
+  /* github footer card */
+  .pj-footer {
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 28px;
+  }
+  .pj-footer-text {
+    font-family: var(--serif);
+    font-size: 17px;
+    color: rgba(255,255,255,0.85);
+    font-style: italic;
+  }
+  .pj-footer-link {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    padding: 7px 16px;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 3px;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+  .pj-footer-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+  /* tags (shared) */
   .tags { display: flex; flex-wrap: wrap; gap: 6px; }
   .tag {
     background: var(--tag-bg);
@@ -328,6 +609,13 @@
     padding: 3px 10px;
     border-radius: 3px;
     letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 680px) {
+    .pj-card { grid-template-columns: 1fr; }
+    .pj-img { min-height: 180px; border-right: none; border-bottom: 1px solid var(--rule); }
+    .pj-info { padding: 20px; }
+    .pj-footer { flex-direction: column; gap: 14px; align-items: flex-start; }
   }
 
   /* SKILLS */
@@ -416,22 +704,43 @@
     transition: width 0.1s ease-out;
   }
 
-  /* CURSOR GLOW (hero) */
-  .cursor-glow {
-    position: absolute;
-    width: 420px;
-    height: 420px;
+  /* CURSOR ORB — full page */
+  .cursor-orb {
+    position: fixed;
+    width: 360px;
+    height: 360px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(122,82,48,0.10) 0%, rgba(122,82,48,0) 70%);
+    background: radial-gradient(circle, rgba(122,82,48,0.18) 0%, rgba(122,82,48,0.06) 45%, transparent 70%);
     pointer-events: none;
+    z-index: 9999;
     transform: translate(-50%, -50%);
-    left: 0; top: 0;
-    opacity: 0;
+    left: -500px;
+    top: -500px;
     transition: opacity 0.4s ease;
-    z-index: 0;
+    opacity: 0;
+    will-change: left, top;
   }
+  body:hover .cursor-orb { opacity: 1; }
+
+  /* CURSOR DOT — tight inner dot */
+  .cursor-dot {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(184,137,90,0.75);
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    left: -500px;
+    top: -500px;
+    transition: transform 0.1s ease, opacity 0.4s ease;
+    opacity: 0;
+    will-change: left, top;
+  }
+  body:hover .cursor-dot { opacity: 1; }
+
   .hero { position: relative; overflow: hidden; }
-  .hero:hover .cursor-glow { opacity: 1; }
 
   /* TYPEWRITER */
   .typewriter-text { border-right: 1px solid var(--ink-3); padding-right: 4px; }
@@ -615,6 +924,8 @@
 </style>
 </head>
 <body>
+  <div class="cursor-orb" id="cursorOrb"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
   <canvas id="singularityCanvas" class="singularity-canvas"></canvas>
   <div class="scroll-progress" id="scrollProgress"></div>
 
@@ -656,7 +967,6 @@
 
   <!-- HERO -->
   <div class="hero" data-section-trigger="top" id="heroSection">
-    <div class="cursor-glow" id="cursorGlow"></div>
     <div class="hero-content">
       <p class="hero-eyebrow"><span class="typewriter-text" id="typewriter">Software Engineer</span> · Bengaluru</p>
       <h1>Pranav <em>BJ</em></h1>
@@ -664,7 +974,7 @@
      I build systems that matter. Distributed transaction engines, scalable ETL pipelines, full-stack applications in production. I thrive solving the hard architectural problems — the ones that separate elegant code from shipping real value.
       </p>
       <div class="hero-meta">
-        <div><strong>GPA</strong><br/>8.48 / 10</div>
+        <div><strong>GPA</strong><br/>8.37 / 10</div>
         <br/>
         <div><strong>Graduating</strong><br/>Jun 2026</div>
         <br/>
@@ -710,92 +1020,182 @@
   <!-- EXPERIENCE -->
   <section id="experience">
     <div class="section-label">Experience</div>
-    <div class="fade-up">
-      <div class="exp-item">
-        <div class="exp-date">Jun 2025<br/>Aug 2025</div>
-        <div>
-          <div class="exp-role">Frontend Engineer Intern</div>
-          <div class="exp-company">Accuracy.ai</div>
-          <ul class="exp-bullets">
-            <li>Developed 15+ reusable, responsive UI components using Next.js and Tailwind CSS, cutting development time for new features by 25%.</li>
-            <li>Integrated REST APIs to manage dynamic data across multiple modules, ensuring seamless frontend–backend data flow.</li>
-            <li>Collaborated in an Agile/Scrum team, translating Figma designs into pixel-perfect, production-ready interfaces.</li>
+    <div class="journey-container fade-up">
+
+      <!-- SVG curved path -->
+      <svg class="journey-svg" viewBox="0 0 900 560" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="pathGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(122,82,48,0)"/>
+            <stop offset="30%" stop-color="rgba(122,82,48,0.35)"/>
+            <stop offset="70%" stop-color="rgba(184,137,90,0.5)"/>
+            <stop offset="100%" stop-color="rgba(184,137,90,0.2)"/>
+          </linearGradient>
+          <filter id="photonGlow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- shadow/ghost path -->
+        <path d="M 0 530 C 80 530 110 190 160 190 C 220 190 360 430 490 390 C 570 365 640 320 700 320 C 760 320 840 345 900 335"
+              fill="none" stroke="rgba(122,82,48,0.06)" stroke-width="10"/>
+
+        <!-- main dashed path — drawn in on scroll -->
+        <path id="jPath"
+              d="M 0 530 C 80 530 110 190 160 190 C 220 190 360 430 490 390 C 570 365 640 320 700 320 C 760 320 840 345 900 335"
+              fill="none"
+              stroke="url(#pathGrad)"
+              stroke-width="1.5"
+              stroke-dasharray="8 7"/>
+
+        <!-- animated photon dot -->
+        <circle id="jPhoton" cx="-20" cy="-20" r="4" fill="rgba(216,168,104,0.9)" filter="url(#photonGlow)"/>
+
+        <!-- start flag -->
+        <text x="8" y="555" font-family="monospace" font-size="10" fill="rgba(153,153,153,0.7)" letter-spacing="2">START</text>
+
+        <!-- end flag -->
+        <text x="820" y="320" font-family="monospace" font-size="10" fill="rgba(153,153,153,0.7)" letter-spacing="2">NOW →</text>
+      </svg>
+
+      <!-- STOP 1: Accuracy AI -->
+      <div class="journey-stop stop-1">
+        <div class="stop-card">
+          <div class="stop-badge"><span class="stop-badge-dot"></span>Level 01</div>
+          
+          <div class="stop-role">Frontend Developer Intern</div>
+          <div class="stop-company">Accuracy AI</div>
+          <div class="stop-dates">Jun 2025 – Aug 2025</div>
+          <ul class="stop-bullets">
+            <li>Built 15+ Next.js components from Figma, cutting page dev time by 25%.</li>
+            <li>Shipped 3 features across Agile sprints; caught 12+ bugs pre-deployment.</li>
+          </ul>
+        </div>
+        <div class="stop-connector"></div>
+        <div class="stop-marker"></div>
+      </div>
+
+      <!-- STOP 2: Karunadu Technologies -->
+      <div class="journey-stop stop-2">
+        <div class="stop-marker"></div>
+        <div class="stop-connector"></div>
+        <div class="stop-card">
+          <div class="stop-badge"><span class="stop-badge-dot"></span>Level 02</div>
+          
+          <div class="stop-role">Python & ML Intern</div>
+          <div class="stop-company">Karunadu Technologies</div>
+          <div class="stop-dates">Feb 2026 – May 2026</div>
+          <ul class="stop-bullets">
+            <li>Built DocuQuery API — cut document search from 5 min → 30 sec using ChromaDB + LLM.</li>
+            <li>Deployed on AWS EC2 with Django ORM + PostgreSQL, sub-second retrieval on 1000+ docs.</li>
           </ul>
         </div>
       </div>
+
     </div>
   </section>
 
   <!-- PROJECTS -->
   <section id="projects" data-section-trigger="middle">
     <div class="section-label">Selected Projects</div>
-    <div class="projects-grid fade-up">
+    <div class="projects-list fade-up">
 
-      <div class="project-card"><div class="spotlight"></div>
-        <div class="project-num">01</div>
-        <div class="project-name">Distributed Multi-Currency Transaction Engine</div>
-        <p class="project-desc">Production-style fintech backend built in Java 17 + Spring Boot 3 with live FX rate conversion via external API integration. Features cross-border fund transfers, immutable audit logging, and a 3-layer architecture (Controller → Service → Repository).</p>
-        <div class="tags">
-          <span class="tag">Java</span>
-          <span class="tag">Spring Boot</span>
-          <span class="tag">JUnit 5</span>
-          <span class="tag">Mockito</span>
-          <span class="tag">Docker</span>
-          <span class="tag">REST API</span>
+      <!-- Project 01: Multi-Currency Transaction Engine -->
+      <div class="pj-card">
+        <div class="pj-spotlight"></div>
+        <div class="pj-img">
+          <span class="pj-img-num">01</span>
+          <!-- Replace skeleton with: <img src="mcte-screenshot.png" alt="Multi-Currency Transaction Engine"> -->
+            <img src="OIP.jpg" alt="Multi-Currency Transaction Engine">
+        </div>
+        <div class="pj-info">
+          <div class="pj-top-row">
+            <span class="pj-num">01 / 03</span>
+            <div class="pj-links">
+              <a class="pj-link" href="https://github.com/PranavBj2406/Distributed-Multi-Currency-Transaction-Engine-.git" target="_blank">GitHub ↗</a>
+              <a class="pj-link" href="http://65.0.139.33:8080/swagger-ui/index.html" target="_blank">Live ↗</a>
+            </div>
+          </div>
+          <div class="pj-name">Multi-Currency Transaction Engine</div>
+          <p class="pj-solve">Cross-border payments break on <strong>currency mismatch, stale FX rates, and duplicate transactions.</strong> This banking API solves all three — live FX conversion with Redis-cached rates, idempotency keys, and JWT-secured transfers deployed on AWS EC2.</p>
+          <div class="tags">
+            <span class="tag">Java 17</span>
+            <span class="tag">Spring Boot 3</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Redis</span>
+            <span class="tag">JWT</span>
+            <span class="tag">Docker</span>
+            <span class="tag">AWS EC2</span>
+          </div>
         </div>
       </div>
 
-      <div class="project-card"><div class="spotlight"></div>
-        <div class="project-num">02</div>
-        <div class="project-name">AI Stock ETL Pipeline with Data Quality Monitoring</div>
-        <p class="project-desc">Built a Dockerized Airflow ETL pipeline extracting livestock data from RapidAPI into MySQL at ~5,000 records/day with validation, deduplication, retry logic, and 99.5% data integrity.</p>
-        <div class="tags">
-          <span class="tag">Python</span>
-          <span class="tag">Airflow</span>
-          <span class="tag">MySQL</span>
-          <span class="tag">Docker</span>
-          <span class="tag">LangChain</span>
-          <span class="tag">Llama 3.1</span>
+      <!-- Project 02: CorpMonitor -->
+      <div class="pj-card">
+        <div class="pj-spotlight"></div>
+        <div class="pj-img">
+          <span class="pj-img-num">02</span>
+          <!-- Replace skeleton with: <img src="corpmonitor-screenshot.png" alt="CorpMonitor"> -->
+            <img src="corpmonitor.png" alt="CorpMonitor">
+     
+        </div>
+        <div class="pj-info">
+          <div class="pj-top-row">
+            <span class="pj-num">02 / 03</span>
+            <div class="pj-links">
+              <a class="pj-link" href="https://github.com/PranavBj2406/CorpMonitor.git" target="_blank">GitHub ↗</a>
+              <a class="pj-link" href="https://corp-monitor.vercel.app/" target="_blank">Live ↗</a>
+            </div>
+          </div>
+          <div class="pj-name">CorpMonitor — Corporate Governance System</div>
+          <p class="pj-solve">Compliance teams <strong>manually comb dense PDF filings</strong> to track board director changes — slow, error-prone, and unscalable. CorpMonitor auto-extracts, validates, and surfaces those records with 85%+ field accuracy and a zero-friction dashboard.</p>
+          <div class="tags">
+            <span class="tag">Next.js</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Nginx</span>
+            <span class="tag">Cloudflare</span>
+            <span class="tag">AWS EC2</span>
+            <span class="tag">GitHub Actions</span>
+          </div>
         </div>
       </div>
 
-      <div class="project-card"><div class="spotlight"></div>
-        <div class="project-num">03</div>
-        <div class="project-name">Multimodal Synthetic Healthcare Generator</div>
-        <p class="project-desc">API-key secured Flask + FastAPI microservices generating synthetic healthcare datasets (100–10K records/run). React.js interface with parameter config, CSV export, and interactive time-series graphs. Deployed on Render.</p>
-        <div class="tags">
-          <span class="tag">React.js</span>
-          <span class="tag">Flask</span>
-          <span class="tag">FastAPI</span>
-          <span class="tag">MongoDB</span>
-          <span class="tag">Docker</span>
-          <span class="tag">Hugging-Face</span>
-          <span class="tag">Flan-T5</span>
+      <!-- Project 03: MyTeamHQ -->
+      <div class="pj-card">
+        <div class="pj-spotlight"></div>
+        <div class="pj-img">
+          <span class="pj-img-num">03</span>
+          <!-- Replace skeleton with: <img src="myteamhq-screenshot.png" alt="MyTeamHQ"> -->
+           <img src="myteamHQ.png" alt="MyTeamHQ">
+        </div>
+        <div class="pj-info">
+          <div class="pj-top-row">
+            <span class="pj-num">03 / 03</span>
+            <div class="pj-links">
+              <a class="pj-link" href="https://github.com/vineet-k09/hrms" target="_blank">GitHub ↗</a>
+              <a class="pj-link" href="https://hrms-theta-eight.vercel.app/auth/login" target="_blank">Live ↗</a>
+            </div>
+          </div>
+          <div class="pj-name">MyTeamHQ — HRMS Platform</div>
+          <p class="pj-solve">Growing teams without enterprise tooling fall back on <strong>spreadsheets and email chains.</strong> MyTeamHQ replaces that chaos with role-based access across 5 permission levels, automated resume screening, and a full org dashboard — built for humans, not IT departments.</p>
+          <div class="tags">
+            <span class="tag">FastAPI</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">SQLAlchemy</span>
+            <span class="tag">Next.js</span>
+            <span class="tag">Docker</span>
+            <span class="tag">Render</span>
+            <span class="tag">Vercel</span>
+          </div>
         </div>
       </div>
 
-      <div class="project-card"><div class="spotlight"></div>
-        <div class="project-num">04</div>
-        <div class="project-name">Kisaan Connect</div>
-        <p class="project-desc">Full-stack agriculture marketplace with RBAC and JWT auth, managing authorization across multiple user roles. RESTful APIs, real-time price analytics dashboards with Redux state management and interactive visualizations.</p>
-        <div class="tags">
-          <span class="tag">React.js</span>
-          <span class="tag">Node.js</span>
-          <span class="tag">Express.js</span>
-          <span class="tag">MongoDB</span>
-          <span class="tag">Redux</span>
-        </div>
-      </div>
-
-      <div class="project-card" style="background: var(--ink); color: #fff;">
-        <div class="project-num" style="color: #666;">— / —</div>
-        <div class="project-name" style="color:#fff; font-style:italic;">More on GitHub</div>
-        <p class="project-desc" style="color: #aaa;">Explore more of my work, contributions, and experiments on GitHub.</p>
-        <div style="margin-top: auto; padding-top: 24px;">
-          <a href="https://github.com/PranavBj2406" target="_blank" class="btn" style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.15); font-size: 13px; text-decoration: none; display: inline-flex; gap: 8px; padding: 10px 18px; border-radius: 4px;">
-            github.com/PranavBj2406 ↗
-          </a>
-        </div>
+      <!-- GitHub footer -->
+      <div class="pj-footer">
+        <span class="pj-footer-text">More experiments on GitHub →</span>
+        <a class="pj-footer-link" href="https://github.com/PranavBj2406" target="_blank">github.com/PranavBj2406 ↗</a>
       </div>
 
     </div>
@@ -918,6 +1318,44 @@
     }
   };
 
+  /* ---- JOURNEY PATH: draw on scroll + photon ---- */
+  (function() {
+    const path = document.getElementById('jPath');
+    const photon = document.getElementById('jPhoton');
+    if (!path || !photon) return;
+
+    /* path draw animation triggered on scroll into view */
+    const total = path.getTotalLength();
+    path.style.strokeDasharray = total + ' ' + total;
+    path.style.strokeDashoffset = total;
+    let drawn = false;
+    const drawObs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !drawn) {
+        drawn = true;
+        path.style.transition = 'stroke-dashoffset 2.4s cubic-bezier(0.4,0,0.2,1)';
+        path.style.strokeDashoffset = '0';
+        drawObs.disconnect();
+      }
+    }, { threshold: 0.2 });
+    const expSection = document.getElementById('experience');
+    if (expSection) drawObs.observe(expSection);
+
+    /* photon dot traveling along path */
+    let t = 0;
+    function animatePhoton() {
+      t = (t + 1.4) % total;
+      const pt = path.getPointAtLength(t);
+      photon.setAttribute('cx', pt.x);
+      photon.setAttribute('cy', pt.y);
+      const progress = t / total;
+      const alpha = progress < 0.08 ? progress / 0.08
+                  : progress > 0.92 ? (1 - progress) / 0.08 : 1;
+      photon.setAttribute('fill', `rgba(216,168,104,${(alpha * 0.9).toFixed(2)})`);
+      requestAnimationFrame(animatePhoton);
+    }
+    animatePhoton();
+  })();
+
   /* ---- FLOATING PARTICLES GENERATION ---- */
   const particlesLayer = document.getElementById('particlesLayer');
   if (particlesLayer) {
@@ -951,16 +1389,39 @@
   window.addEventListener('scroll', updateProgress);
   updateProgress();
 
-  /* ---- CURSOR GLOW IN HERO ---- */
-  const heroSection = document.getElementById('heroSection');
-  const cursorGlow = document.getElementById('cursorGlow');
-  if (heroSection && cursorGlow) {
-    heroSection.addEventListener('mousemove', (e) => {
-      const rect = heroSection.getBoundingClientRect();
-      cursorGlow.style.left = (e.clientX - rect.left) + 'px';
-      cursorGlow.style.top = (e.clientY - rect.top) + 'px';
-    });
-  }
+  /* ---- CURSOR ORB — full page, smooth follow ---- */
+  const cursorOrb = document.getElementById('cursorOrb');
+  const cursorDot = document.getElementById('cursorDot');
+  let orbX = -500, orbY = -500;
+  let dotX = -500, dotY = -500;
+  let mouseX = -500, mouseY = -500;
+  const ORB_EASE = 0.07;
+  const DOT_EASE = 0.22;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  document.addEventListener('mouseleave', () => {
+    mouseX = -500; mouseY = -500;
+  });
+
+  (function animateCursor() {
+    orbX += (mouseX - orbX) * ORB_EASE;
+    orbY += (mouseY - orbY) * ORB_EASE;
+    dotX += (mouseX - dotX) * DOT_EASE;
+    dotY += (mouseY - dotY) * DOT_EASE;
+    if (cursorOrb) { cursorOrb.style.left = orbX + 'px'; cursorOrb.style.top = orbY + 'px'; }
+    if (cursorDot) { cursorDot.style.left = dotX + 'px'; cursorDot.style.top = dotY + 'px'; }
+    requestAnimationFrame(animateCursor);
+  })();
+
+  /* Scale dot on hover over clickable elements */
+  document.querySelectorAll('a, button, .project-card, .contact-link, .stat-cell').forEach(el => {
+    el.addEventListener('mouseenter', () => { if (cursorDot) cursorDot.style.transform = 'translate(-50%,-50%) scale(2.8)'; });
+    el.addEventListener('mouseleave', () => { if (cursorDot) cursorDot.style.transform = 'translate(-50%,-50%) scale(1)'; });
+  });
 
   /* ---- TYPEWRITER ROLE CYCLE ---- */
   const roles = ['Software Engineer', 'Backend Developer', 'Full-Stack Engineer', 'Problem Solver'];
